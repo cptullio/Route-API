@@ -11,6 +11,7 @@ namespace MyRouteApp.Infrastructure.Persistence
     {
         public AppDbContext(DbContextOptions options) : base(options)
         {
+            
             if (Database.GetPendingMigrations().Any())
                 Database.Migrate();
         }

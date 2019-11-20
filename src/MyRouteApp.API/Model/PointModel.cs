@@ -8,6 +8,7 @@ namespace MyRouteApp.API.Model
 {
     public class PointModel
     {
+        [Required]
         public int Id { get; set; }
         [Required]
         [MinLength(1)]

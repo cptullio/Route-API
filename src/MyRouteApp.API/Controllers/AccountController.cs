@@ -15,6 +15,9 @@ using static IdentityModel.OidcConstants;
 
 namespace MyRouteApp.API.Controllers
 {
+    /// <summary>
+    /// Authentication Control
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
@@ -25,28 +28,37 @@ namespace MyRouteApp.API.Controllers
         {
             IdentityServerConfiguration = identityServerConfiguration;
         }
-
+        /// <summary>
+        /// Autenticate to IdentityServer Created, please run the 
+        /// MyRouteApp.IdentityServer project before try. with dotnet run MyRouteApp.IdentityServer
+        /// </summary>
+        /// <param name="model">userName and password</param>
+        /// <returns>Token to be used over the authetication services</returns>
         [HttpPost("login")]
         public async Task<IActionResult> Post([FromBody] AutenticationInputModel model)
         {
             try
             {
-                using (var client = new HttpClient())
+                if (ModelState.IsValid)
                 {
-                    var response = await client.RequestPasswordTokenAsync(new PasswordTokenRequest
+                    using (var client = new HttpClient())
                     {
-                        Address = IdentityServerConfiguration.ServerUrl + "/connect/token",
-                        ClientId = IdentityServerConfiguration.ClientId,
-                        ClientSecret = IdentityServerConfiguration.ClientSecret,
-                        Scope = IdentityServerConfiguration.Scope,
-                        UserName = model.UserName,
-                        Password = model.Password,
-                    });
+                        var response = await client.RequestPasswordTokenAsync(new PasswordTokenRequest
+                        {
+                            Address = IdentityServerConfiguration.ServerUrl + "/connect/token",
+                            ClientId = IdentityServerConfiguration.ClientId,
+                            ClientSecret = IdentityServerConfiguration.ClientSecret,
+                            Scope = IdentityServerConfiguration.Scope,
+                            UserName = model.UserName,
+                            Password = model.Password,
+                        });
 
-                    if (response.IsError)
-                        throw new Exception(response.Error);
-                    return Ok(new { token = response.AccessToken });
+                        if (response.IsError)
+                            throw new Exception(response.Error);
+                        return Ok(new { token = response.AccessToken });
+                    }
                 }
+                return BadRequest(ModelState);
             }
             catch (Exception ex)
             {

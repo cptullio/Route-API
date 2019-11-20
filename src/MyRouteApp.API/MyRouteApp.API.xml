@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MyRouteApp.API</name>
+    </assembly>
+    <members>
+        <member name="T:MyRouteApp.API.Controllers.AccountController">
+            <summary>
+            Authentication Control
+            </summary>
+        </member>
+        <member name="M:MyRouteApp.API.Controllers.AccountController.Post(MyRouteApp.API.Model.AutenticationInputModel)">
+            <summary>
+            Autenticate to IdentityServer Created, please run the 
+            MyRouteApp.IdentityServer project before try. with dotnet run MyRouteApp.IdentityServer
+            </summary>
+            <param name="model">userName and password</param>
+            <returns>Token to be used over the authetication services</returns>
+        </member>
+        <member name="T:MyRouteApp.API.Controllers.PointController">
+            <summary>
+            Control of the Point Data of the System.
+            </summary>
+        </member>
+        <member name="M:MyRouteApp.API.Controllers.PointController.Get">
+            <summary>
+            List all Points Registered in the system
+            </summary>
+            <returns>Points with Id and Name</returns>
+        </member>
+        <member name="M:MyRouteApp.API.Controllers.PointController.Post(MyRouteApp.API.Model.PointModel)">
+            <summary>
+            Add new Point Name to the database.
+            </summary>
+            <param name="model">A Point Data with Name.</param>
+            <returns>The Point Data with the new ID generated</returns>
+        </member>
+        <member name="M:MyRouteApp.API.Controllers.PointController.Put(MyRouteApp.API.Model.PointModel)">
+            <summary>
+            Update a Post record based on Id and Name
+            </summary>
+            <param name="model">Point object Id and Name</param>
+            <returns>The Point object updated</returns>
+        </member>
+        <member name="M:MyRouteApp.API.Controllers.PointController.Delete(System.Int32)">
+            <summary>
+            Delete from Database a Point based on ID
+            </summary>
+            <param name="id">Identificator point</param>
+            <returns>Only the HTTP status code indicating success or failed</returns>
+        </member>
+    </members>
+</doc>

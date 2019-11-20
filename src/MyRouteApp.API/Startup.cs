@@ -19,6 +19,13 @@ using static IdentityModel.OidcConstants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
 using MyRouteApp.API.Helpers;
+using System.Reflection;
+using MediatR;
+using MyRouteApp.Infrastructure.Persistence.Repository;
+using MyRouteApp.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.PlatformAbstractions;
+using System.IO;
 
 namespace MyRouteApp.API
 {
@@ -32,12 +39,11 @@ namespace MyRouteApp.API
         public IConfiguration Configuration { get; }
         
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+       
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            var client = new HttpClient();
-
+            services.AddMediatR(Assembly.GetExecutingAssembly());
 
             var identityServerConfigurationSettings = new IdentityServerConfigurationSettings();
             new ConfigureFromConfigurationOptions<IdentityServerConfigurationSettings>(
@@ -46,7 +52,20 @@ namespace MyRouteApp.API
             
             if (identityServerConfigurationSettings == null)
                 throw new KeyNotFoundException("IdentityServerConfig");
+
             services.AddSingleton<IdentityServerConfigurationSettings>(identityServerConfigurationSettings);
+
+            services.AddDbContext<AppDbContext>(options =>
+            {
+                string connectionString = Configuration.GetConnectionString("myRouteDB");
+                if (string.IsNullOrEmpty(connectionString))
+                    throw new Exception("Connection String not found!");
+                options.UseSqlite(connectionString);
+
+            });
+
+            services.AddScoped<IPointRepository, PointRepository>();
+            
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer("Bearer", options =>
             {
@@ -61,7 +80,7 @@ namespace MyRouteApp.API
                 c.SwaggerDoc("v1", new Info
                 {
                     Version = "v1",
-                    Title = "Core API",
+                    Title = "Route APP Api",
                     Description = "Route APP Api",
                     TermsOfService = "None",
                     Contact = new Contact
@@ -71,9 +90,16 @@ namespace MyRouteApp.API
                     },
                     License = new License
                     {
-                        Name = "Demo"
+                        Name = "Demonstration License"
                     }
+                   
                 });
+                string XMLPath = Path.Combine( 
+                    PlatformServices.Default.Application.ApplicationBasePath, 
+                    $"{PlatformServices.Default.Application.ApplicationName}.xml");
+                
+                c.IncludeXmlComments(XMLPath, true);
+
                 c.AddSecurityDefinition("Bearer", new ApiKeyScheme()
                 {
                     Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
