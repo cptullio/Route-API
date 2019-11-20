@@ -3,6 +3,7 @@ using MyRouteApp.Infrastructure.Exceptions;
 using MyRouteApp.Infrastructure.Persistence.DTO;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,14 +18,20 @@ namespace MyRouteApp.Infrastructure.Persistence.Repository
         {
             this.context = context;
         }
+        private IQueryable<Route> DefaultQueryRoutes()
+        {
+            return context.Routes.Include(x => x.DestinationPoint).Include(x => x.OriginalPoint);
+        }
+
         public async Task<IEnumerable<Route>> GetAll(CancellationToken cancellationToken)
         {
-            return await context.Routes.ToListAsync(cancellationToken);
+            var result = await DefaultQueryRoutes().ToListAsync(cancellationToken);
+            return result;
         }
 
         public async Task<Route> GetbyId(int id, CancellationToken cancellationToken)
         {
-            var route = await context.Routes.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            var route = await DefaultQueryRoutes().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
             if (route == null)
                 throw new NotFoundException("Point");
             return route;
@@ -34,7 +41,7 @@ namespace MyRouteApp.Infrastructure.Persistence.Repository
         {
             await context.Routes.AddAsync(route, cancellationToken);
             await context.SaveChangesAsync(cancellationToken);
-            return route;
+            return await GetbyId(route.Id, cancellationToken);
         }
 
         public async Task<bool> Delete(int id, CancellationToken cancellationToken)
@@ -50,9 +57,10 @@ namespace MyRouteApp.Infrastructure.Persistence.Repository
             var routeResult = await this.GetbyId(route.Id, cancellationToken);
             routeResult.Time = route.Time;
             routeResult.Cost = route.Cost;
-            routeResult.DestinationPoint = route.DestinationPoint;
+            routeResult.DestinationPointId = route.DestinationPointId;
+            routeResult.OriginalPointId = route.OriginalPointId;
             await context.SaveChangesAsync(cancellationToken);
-            return routeResult;
+            return await this.GetbyId(route.Id, cancellationToken);
         }
     }
 }

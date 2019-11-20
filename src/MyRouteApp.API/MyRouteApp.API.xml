@@ -49,5 +49,37 @@
             <param name="id">Identificator point</param>
             <returns>Only the HTTP status code indicating success or failed</returns>
         </member>
+        <member name="T:MyRouteApp.API.Controllers.RouteController">
+            <summary>
+            Control of the Route Data of the System.
+            </summary>
+        </member>
+        <member name="M:MyRouteApp.API.Controllers.RouteController.Get">
+            <summary>
+            List all Routes Registered in the system
+            </summary>
+            <returns>Routes with Id and Name</returns>
+        </member>
+        <member name="M:MyRouteApp.API.Controllers.RouteController.Post(MyRouteApp.API.Model.RouteModel)">
+            <summary>
+            Add new Route Name to the database.
+            </summary>
+            <param name="model">A Route Data with Name.</param>
+            <returns>The Route Data with the new ID generated</returns>
+        </member>
+        <member name="M:MyRouteApp.API.Controllers.RouteController.Put(MyRouteApp.API.Model.RouteModel)">
+            <summary>
+            Update a Post record based on Id
+            </summary>
+            <param name="model">Route object Id</param>
+            <returns>The Route object updated</returns>
+        </member>
+        <member name="M:MyRouteApp.API.Controllers.RouteController.Delete(System.Int32)">
+            <summary>
+            Delete from Database a Route based on ID
+            </summary>
+            <param name="id">Identificator Route</param>
+            <returns>Only the HTTP status code indicating success or failed</returns>
+        </member>
     </members>
 </doc>

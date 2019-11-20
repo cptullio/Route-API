@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 namespace MyRouteApp.API.Transactions.Point
 {
-    public class PointListTransactionRequest : IRequest<PointListTransactionResponse> { 
+    public class PointListTransactionRequest : IRequest<PointListTransactionResponse> 
+    { 
 
         
     }

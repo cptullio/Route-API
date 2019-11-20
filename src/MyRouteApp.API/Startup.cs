@@ -65,7 +65,8 @@ namespace MyRouteApp.API
             });
 
             services.AddScoped<IPointRepository, PointRepository>();
-            
+            services.AddScoped<IRouteRepository, RouteRepository>();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer("Bearer", options =>
             {
@@ -102,7 +103,7 @@ namespace MyRouteApp.API
 
                 c.AddSecurityDefinition("Bearer", new ApiKeyScheme()
                 {
-                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Bearer {token}\"",
                     Name = "Authorization",
                     In = "header",
                     Type = "apiKey",

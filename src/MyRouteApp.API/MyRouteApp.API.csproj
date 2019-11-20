@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Transactions\Route\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
