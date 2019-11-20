@@ -2,23 +2,34 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MyRouteApp.API.Helpers;
+using MyRouteApp.API.Model;
+using MyRouteApp.Infrastructure.Persistence.Repository;
 
-namespace MyRouteApp.IdentityServer.Controllers
+namespace MyRouteApp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class PointController : ControllerBase
     {
-        // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public IPointRepository pointRepository { get; set; }
+        public PointController(IPointRepository pointRepository)
         {
-            return new string[] { "value1", "value2" };
+            this.pointRepository = pointRepository;
+        }
+        [HttpGet]
+        [Authorize]
+        public async Task<ActionResult<List<PointModel>>> Get()
+        {
+            
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "admin")]
         public ActionResult<string> Get(int id)
         {
             return "value";

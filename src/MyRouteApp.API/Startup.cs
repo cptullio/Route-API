@@ -18,6 +18,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using static IdentityModel.OidcConstants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
+using MyRouteApp.API.Helpers;
 
 namespace MyRouteApp.API
 {
@@ -37,14 +38,21 @@ namespace MyRouteApp.API
             services.AddCors();
             var client = new HttpClient();
 
-            
 
+            var identityServerConfigurationSettings = new IdentityServerConfigurationSettings();
+            new ConfigureFromConfigurationOptions<IdentityServerConfigurationSettings>(
+                Configuration.GetSection("IdentityServerConfig"))
+                .Configure(identityServerConfigurationSettings);
+            
+            if (identityServerConfigurationSettings == null)
+                throw new KeyNotFoundException("IdentityServerConfig");
+            services.AddSingleton<IdentityServerConfigurationSettings>(identityServerConfigurationSettings);
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer("Bearer", options =>
             {
-                options.Authority = "https://localhost:5093";
+                options.Authority = identityServerConfigurationSettings.ServerUrl;
                 options.RequireHttpsMetadata = true;
-                options.Audience = "https://localhost:5093/resources";
+                options.Audience = identityServerConfigurationSettings.Audience;
                 
             });
             services.AddAuthorization();
@@ -54,7 +62,7 @@ namespace MyRouteApp.API
                 {
                     Version = "v1",
                     Title = "Core API",
-                    Description = "ASP.NET Core API",
+                    Description = "Route APP Api",
                     TermsOfService = "None",
                     Contact = new Contact
                     {
@@ -71,8 +79,9 @@ namespace MyRouteApp.API
                     Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
                     Name = "Authorization",
                     In = "header",
-                    Type = "apiKey"
-                });
+                    Type = "apiKey",
+                    
+                }) ;
                 c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
                     {
                     {"Bearer",new string[]{}}

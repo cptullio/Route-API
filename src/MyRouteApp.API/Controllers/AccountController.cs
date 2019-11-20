@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using IdentityModel;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using MyRouteApp.API.Helpers;
 using MyRouteApp.API.Model;
 using static IdentityModel.OidcConstants;
 
@@ -16,28 +19,40 @@ namespace MyRouteApp.API.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
+        public IdentityServerConfigurationSettings IdentityServerConfiguration { get; }
 
-
-        [HttpPost]
-        public async Task<string> Post([FromBody] AutenticationInputModel model)
+        public AccountController(IdentityServerConfigurationSettings identityServerConfiguration)
         {
+            IdentityServerConfiguration = identityServerConfiguration;
+        }
 
-            var client = new HttpClient();
-            var secret = "123456789";
-            var response = await client.RequestPasswordTokenAsync(new PasswordTokenRequest
+        [HttpPost("login")]
+        public async Task<IActionResult> Post([FromBody] AutenticationInputModel model)
+        {
+            try
             {
-                Address = "https://localhost:5093/connect/token",
-                ClientId = "myclient",
-                ClientSecret =   secret,
-                Scope = "IdServerScope",
-                UserName = model.UserName,
-                Password = model.Password,
-                
-                
-            });
+                using (var client = new HttpClient())
+                {
+                    var response = await client.RequestPasswordTokenAsync(new PasswordTokenRequest
+                    {
+                        Address = IdentityServerConfiguration.ServerUrl + "/connect/token",
+                        ClientId = IdentityServerConfiguration.ClientId,
+                        ClientSecret = IdentityServerConfiguration.ClientSecret,
+                        Scope = IdentityServerConfiguration.Scope,
+                        UserName = model.UserName,
+                        Password = model.Password,
+                    });
 
-            return "Bearer " + response.AccessToken;
-
+                    if (response.IsError)
+                        throw new Exception(response.Error);
+                    return Ok(new { token = response.AccessToken });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+           
         }
     }
 
