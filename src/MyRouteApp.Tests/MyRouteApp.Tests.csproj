@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.1.14" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.4.0" />
     <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
@@ -14,7 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MyRouteApp.API\MyRouteApp.API.csproj" />
     <ProjectReference Include="..\MyRouteApp.Domain\MyRouteApp.Domain.csproj" />
+    <ProjectReference Include="..\MyRouteApp.Infrastructure\MyRouteApp.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

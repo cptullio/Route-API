@@ -17,6 +17,17 @@
             <param name="model">userName and password</param>
             <returns>Token to be used over the authetication services</returns>
         </member>
+        <member name="T:MyRouteApp.API.Controllers.PathController">
+            <summary>
+            Control of the Route Data of the System.
+            </summary>
+        </member>
+        <member name="M:MyRouteApp.API.Controllers.PathController.Get(System.Int32,System.Int32)">
+            <summary>
+            Present 
+            </summary>
+            <returns>Routes with Id and Name</returns>
+        </member>
         <member name="T:MyRouteApp.API.Controllers.PointController">
             <summary>
             Control of the Point Data of the System.
