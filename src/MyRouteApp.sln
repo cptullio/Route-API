@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29503.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyRouteApp.API", "MyRouteApp.API\MyRouteApp.API.csproj", "{66C2CC72-4FBD-4E25-BDCB-42103440ACCA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyRouteApp.Infrastructure", "MyRouteApp.Infrastructure\MyRouteApp.Infrastructure.csproj", "{475ADE2F-8E47-4E2C-8F48-760EB6673781}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyRouteApp.Domain", "MyRouteApp.Domain\MyRouteApp.Domain.csproj", "{60160F0E-3106-4641-9726-B37268A578B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyRouteApp.Tests", "MyRouteApp.Tests\MyRouteApp.Tests.csproj", "{BDF24B82-826C-47F7-9E32-DA64BA027432}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyRouteApp.IdentityServer", "MyRouteApp.IdentityServer\MyRouteApp.IdentityServer.csproj", "{36C8AAC0-6808-4EB1-B540-5CF2EEBFF6C3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{66C2CC72-4FBD-4E25-BDCB-42103440ACCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66C2CC72-4FBD-4E25-BDCB-42103440ACCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66C2CC72-4FBD-4E25-BDCB-42103440ACCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66C2CC72-4FBD-4E25-BDCB-42103440ACCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{475ADE2F-8E47-4E2C-8F48-760EB6673781}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{475ADE2F-8E47-4E2C-8F48-760EB6673781}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{475ADE2F-8E47-4E2C-8F48-760EB6673781}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{475ADE2F-8E47-4E2C-8F48-760EB6673781}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60160F0E-3106-4641-9726-B37268A578B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60160F0E-3106-4641-9726-B37268A578B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60160F0E-3106-4641-9726-B37268A578B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60160F0E-3106-4641-9726-B37268A578B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDF24B82-826C-47F7-9E32-DA64BA027432}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDF24B82-826C-47F7-9E32-DA64BA027432}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDF24B82-826C-47F7-9E32-DA64BA027432}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDF24B82-826C-47F7-9E32-DA64BA027432}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36C8AAC0-6808-4EB1-B540-5CF2EEBFF6C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36C8AAC0-6808-4EB1-B540-5CF2EEBFF6C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36C8AAC0-6808-4EB1-B540-5CF2EEBFF6C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36C8AAC0-6808-4EB1-B540-5CF2EEBFF6C3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F263A1AE-8C6A-48CF-BFF3-6818C4ECFF8D}
+	EndGlobalSection
+EndGlobal
