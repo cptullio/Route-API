@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MyRouteApp.API.Transactions.Path
 {
-    public class PathTransactionRequest : IRequest<PathTransactionResponse>
+    public class AllPathsTransactionRequest : IRequest<AllPathsTransactionResponse>
     {
         public PathModel PathModel { get; set; }
     }

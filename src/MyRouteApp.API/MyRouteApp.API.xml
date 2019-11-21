@@ -22,11 +22,17 @@
             Control of the Route Data of the System.
             </summary>
         </member>
-        <member name="M:MyRouteApp.API.Controllers.PathController.FastestPath(MyRouteApp.API.Model.PathModel)">
+        <member name="M:MyRouteApp.API.Controllers.PathController.CheapestPath(MyRouteApp.API.Model.PathModel)">
             <summary>
-            Present 
+            Find the cheapest path from Origin to Destin with their cost.
             </summary>
-            <returns>Routes with Id and Name</returns>
+            <returns>The Path</returns>
+        </member>
+        <member name="M:MyRouteApp.API.Controllers.PathController.AllPaths(MyRouteApp.API.Model.PathModel)">
+            <summary>
+            Find the All Paths from Origin to Destin with their cost.
+            </summary>
+            <returns>The Path</returns>
         </member>
         <member name="T:MyRouteApp.API.Controllers.PointController">
             <summary>

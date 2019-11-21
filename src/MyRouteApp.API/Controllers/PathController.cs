@@ -29,18 +29,18 @@ namespace MyRouteApp.API.Controllers
             _mediator = mediator;
         }
         /// <summary>
-        /// Present 
+        /// Find the cheapest path from Origin to Destin with their cost.
         /// </summary>
-        /// <returns>Routes with Id and Name</returns>
-        [HttpPost("FastestPath")]
+        /// <returns>The Path</returns>
+        [HttpPost("CheapestPath")]
         [Authorize]
-        public async Task<ActionResult<FullPathModel>> FastestPath([FromBody]PathModel model)
+        public async Task<ActionResult<FullPathModel>> CheapestPath([FromBody]PathModel model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var request = new PathTransactionRequest() { PathModel = model };
+                    var request = new CheapestPathTransactionRequest() { PathModel = model };
                     var response = await _mediator.Send(request);
                     return Ok(response.FullPath);
                 }
@@ -56,12 +56,36 @@ namespace MyRouteApp.API.Controllers
                 
             }
             return BadRequest(ModelState);
-            
-            
         }
 
+        /// <summary>
+        /// Find the All Paths from Origin to Destin with their cost.
+        /// </summary>
+        /// <returns>The Path</returns>
+        [HttpPost("AllPaths")]
+        [Authorize]
+        public async Task<ActionResult<List<FullPathModel>>> AllPaths([FromBody]PathModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var request = new AllPathsTransactionRequest() { PathModel = model };
+                    var response = await _mediator.Send(request);
+                    return Ok(response.FullPathList);
+                }
+                catch (NotFoundException ex)
+                {
+                    return NotFound(ex.Message);
+                }
 
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
 
-        
+            }
+            return BadRequest(ModelState);
+        }
     }
 }

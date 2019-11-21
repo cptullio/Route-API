@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyRouteApp.API.Transactions.Path
 {
-    public class PathTransactionResponse
+    public class CheapestPathTransactionResponse
     {
         public FullPathModel FullPath { get; set; }
     }
