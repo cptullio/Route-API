@@ -10,11 +10,17 @@ Based on this graph, I've created an API to get the cheapest path (based on the 
 In this solution I've used:
 
 Identity Server - To control the applications and users of my environment.
+
 Jwt Bearer - To control my users in the API
+
 SQLite - To persist the routes and points of my graph.
+
 Entity Framework Core - The ORM to manipulate my data.
+
 Mediatr - To organize my service in Querys and Commands.  Although I'm using only Entity Framework, would be nicer to have the queries running using Dapper, maybe in a second version ;-)
+
 MsTest - To define some unit test from Domain and Integration Test to Validate 
+
 Swagger - To documentation and execution of the API
 
 # How to run the project
