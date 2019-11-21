@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Microsoft.Extensions.DependencyInjection;
 using MyRouteApp.Infrastructure.Persistence.Repository;
 using MyRouteApp.Infrastructure.Persistence.DTO;
+using MyRouteApp.API.Helpers;
 
 namespace MyRouteApp.Tests.IntegrationTest
 {
@@ -46,16 +47,7 @@ namespace MyRouteApp.Tests.IntegrationTest
             await generatePoint();
             var token = new System.Threading.CancellationToken();
             var routes = await repository.GetAll(token);
-            var points = await repositoryPoint.GetAll(token);
-            var domainPoints = points.Select(x => new MyRouteApp.Domain.Point(x.Id, x.Name)).ToList();
-            foreach (var item in routes)
-            {
-                var originPoint = domainPoints.Where(x => x.Id == item.OriginalPoint.Id).FirstOrDefault();
-                var destinPoint = domainPoints.Where(x => x.Id == item.DestinationPoint.Id).FirstOrDefault();
-                MyRouteApp.Domain.Route route = new MyRouteApp.Domain.Route(destinPoint, item.Cost, item.Time);
-                originPoint.DestinationList.Add(route);
-            }
-
+            var domainPoints = Conversions.FromDTORoutesToGraph(routes);
             var pA = domainPoints.Where(x => x.Name == "A").FirstOrDefault();
             var pB = domainPoints.Where(x => x.Name == "B").FirstOrDefault();
 
@@ -70,7 +62,7 @@ namespace MyRouteApp.Tests.IntegrationTest
             var pG = domainPoints.Where(x => x.Name == "G").FirstOrDefault();
             var result = pE.FindPaths(pG);
             Console.WriteLine(JsonConvert.SerializeObject(result));
-            Assert.AreEqual(6, result.Count);
+            Assert.AreEqual(1, result.Count);
         
 
     }

@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MyRouteApp.API;
 using MyRouteApp.Infrastructure.Persistence;
+using MyRouteApp.Infrastructure.Persistence.Repository;
 
 namespace MyRouteApp.Tests.RepositoryTest
 {
@@ -16,10 +17,10 @@ namespace MyRouteApp.Tests.RepositoryTest
         public virtual void Setup()
         {
             Config = new ConfigurationBuilder().AddInMemoryCollection().Build();
-            var startup = new Startup(Config);
             var services = new ServiceCollection();
             services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("MyDbTest"));
-            startup.ConfigureServices(services);
+            services.AddScoped<IPointRepository, PointRepository>();
+            services.AddScoped<IRouteRepository, RouteRepository>();
             Provider = services.BuildServiceProvider();
         }
     }

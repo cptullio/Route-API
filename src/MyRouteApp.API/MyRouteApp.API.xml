@@ -22,7 +22,7 @@
             Control of the Route Data of the System.
             </summary>
         </member>
-        <member name="M:MyRouteApp.API.Controllers.PathController.Get(System.Int32,System.Int32)">
+        <member name="M:MyRouteApp.API.Controllers.PathController.FastestPath(MyRouteApp.API.Model.PathModel)">
             <summary>
             Present 
             </summary>

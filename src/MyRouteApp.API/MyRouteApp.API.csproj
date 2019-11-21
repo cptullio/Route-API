@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MyRouteApp.Domain\MyRouteApp.Domain.csproj" />
     <ProjectReference Include="..\MyRouteApp.Infrastructure\MyRouteApp.Infrastructure.csproj" />
   </ItemGroup>
 

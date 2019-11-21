@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyRouteApp.API.Helpers;
 using MyRouteApp.API.Model;
+using MyRouteApp.API.Transactions.Path;
 using MyRouteApp.API.Transactions.Route;
 using MyRouteApp.Infrastructure.Exceptions;
 using MyRouteApp.Infrastructure.Persistence.Repository;
@@ -31,15 +32,32 @@ namespace MyRouteApp.API.Controllers
         /// Present 
         /// </summary>
         /// <returns>Routes with Id and Name</returns>
-        [HttpGet("FastestPath")]
+        [HttpPost("FastestPath")]
         [Authorize]
-        public async Task<ActionResult<List<RouteModel>>> Get(int OriginalPointId, int DestinationPointId)
+        public async Task<ActionResult<FullPathModel>> FastestPath([FromBody]PathModel model)
         {
-            return NoContent();
-            //var response = await _mediator.Send(new FastestPathTransactionRequest());
-            //if (response == null || response.RouteList?.Count == 0)
-            //    return NoContent();
-            //return response.RouteList;
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var request = new PathTransactionRequest() { PathModel = model };
+                    var response = await _mediator.Send(request);
+                    return Ok(response.FullPath);
+                }
+                catch (NotFoundException ex)
+                {
+                    return NotFound(ex.Message);
+                }
+
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+                
+            }
+            return BadRequest(ModelState);
+            
+            
         }
 
 
