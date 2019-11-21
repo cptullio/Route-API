@@ -16,7 +16,7 @@ using MyRouteApp.Infrastructure.Persistence.Repository;
 namespace MyRouteApp.API.Controllers
 {
     /// <summary>
-    /// Control of the Route Data of the System.
+    /// Control that calculate the paths.
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
@@ -31,7 +31,8 @@ namespace MyRouteApp.API.Controllers
         /// <summary>
         /// Find the cheapest path from Origin to Destin with their cost.
         /// </summary>
-        /// <returns>The Path</returns>
+        /// <param name="model"> Identifications of Original and Destination Points</param>
+        /// <returns>The Cheapest Path with Cost</returns>
         [HttpPost("CheapestPath")]
         [Authorize]
         public async Task<ActionResult<FullPathModel>> CheapestPath([FromBody]PathModel model)
@@ -59,9 +60,10 @@ namespace MyRouteApp.API.Controllers
         }
 
         /// <summary>
-        /// Find the All Paths from Origin to Destin with their cost.
+        ///Find the All Paths from Origin to Destin with their cost.
         /// </summary>
-        /// <returns>The Path</returns>
+        /// <param name="model"> Identifications of Original and Destination Points</param>
+        /// <returns>All Paths with Cost</returns>
         [HttpPost("AllPaths")]
         [Authorize]
         public async Task<ActionResult<List<FullPathModel>>> AllPaths([FromBody]PathModel model)
